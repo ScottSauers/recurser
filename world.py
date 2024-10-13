@@ -196,21 +196,8 @@ def train(generator, criterion, optimizer, config, camera):
 
         # Save generated images at intervals
         if iteration % config.save_interval == 0:
-            print(f"[INFO] Saving generated image and checkpoint at iteration {iteration}")
+            print(f"[INFO] Saving generated image at iteration {iteration}")
             save_generated_image(fake_image, iteration, config.output_dir)
-            # Save model checkpoint
-            checkpoint = {
-                'iteration': iteration,
-                'model_state_dict': generator.state_dict(),
-                'optimizer_state_dict': optimizer.state_dict(),
-                'loss_history': loss_history
-            }
-            checkpoint_path = os.path.join(config.output_dir, f'checkpoint_{iteration}.pth')
-            try:
-                torch.save(checkpoint, checkpoint_path)
-                print(f"[INFO] Model checkpoint saved at iteration {iteration}: {checkpoint_path}")
-            except Exception as e:
-                print(f"[ERROR] Failed to save checkpoint at iteration {iteration}: {e}")
 
     # Save final generated image and checkpoint
     print("\n[INFO] Saving final generated image and checkpoint.")
